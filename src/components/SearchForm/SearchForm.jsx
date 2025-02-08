@@ -1,19 +1,19 @@
 import { Field, Formik, Form } from "formik";
 
-const initialValues = {
-    movieName: "",
-}
-
-const SearchForm = ({ onSearch }) => {
+const SearchForm = ({ onSearch, initialQuery }) => {
+    const initialValues = {
+    movieName: initialQuery || "",
+    }
+    
     const handleSubmit = (values, actions) => {
         if (!values.movieName.trim()) return;
         onSearch(values.movieName.trim())
-        actions.resetForm();
+        actions.setSubmitting(false);
     }
 
     return (
         <div>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
                 <Form>
                     <Field
                         type="text"
